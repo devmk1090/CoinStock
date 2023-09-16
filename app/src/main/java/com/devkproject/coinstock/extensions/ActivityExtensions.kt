@@ -17,5 +17,10 @@ fun AppCompatActivity.replaceFragment(
         this.supportFragmentManager.popBackStack()
     }
 
-    this.supportFragmentManager.commit {  }
+    this.supportFragmentManager.commit(allowStateLoss = true) {
+        replace(containerViewId, fragment, tag)
+        if (addToBackStack) {
+            addToBackStack(tag)
+        }
+    }
 }
