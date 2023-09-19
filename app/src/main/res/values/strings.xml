@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">CoinStock</string>
+
+    <string name="text_coin">코인</string>
+    <string name="text_stock">주식</string>
+    <string name="text_alarm">알림</string>
+    <string name="text_setting">설정</string>
 </resources>
