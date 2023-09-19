@@ -6,8 +6,10 @@ import android.view.MenuItem
 import androidx.annotation.IdRes
 import com.devkproject.coinstock.databinding.ActivityMainBinding
 import com.devkproject.coinstock.extensions.replaceFragment
+import com.devkproject.coinstock.ui.AlarmFragment
 import com.devkproject.coinstock.ui.CoinFragment
 import com.devkproject.coinstock.ui.SettingFragment
+import com.devkproject.coinstock.ui.StockFragment
 import java.lang.IllegalArgumentException
 
 class MainActivity : AppCompatActivity() {
@@ -36,8 +38,8 @@ class MainActivity : AppCompatActivity() {
             binding.fragmentContainer.id,
             when (mainSeparator) {
                 MainSeparator.COIN -> CoinFragment()
-                MainSeparator.STOCK -> CoinFragment()
-                MainSeparator.ALARM -> CoinFragment()
+                MainSeparator.STOCK -> StockFragment()
+                MainSeparator.ALARM -> AlarmFragment()
                 MainSeparator.SETTING -> SettingFragment()
             }, mainSeparator.name
         )
