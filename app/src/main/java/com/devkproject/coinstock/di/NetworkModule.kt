@@ -1,7 +1,5 @@
 package com.devkproject.coinstock.di
 
-import com.devkproject.coinstock.helper.Deserializer
-import com.devkproject.coinstock.model.Coin
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -27,7 +25,6 @@ object NetworkModule {
     @Provides
     fun provideGson(): Gson {
         return GsonBuilder()
-            .registerTypeAdapter(Coin::class.java, Deserializer())
             .create()
     }
 }

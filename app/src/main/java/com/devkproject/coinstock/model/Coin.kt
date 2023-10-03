@@ -1,6 +1,14 @@
 package com.devkproject.coinstock.model
 
-data class Coin(
-    val name: String,
-    val price: Double
-)
+data class UpbitSocket(
+    var type: String,
+    var codes: List<String>,
+) {
+    data class Ticket(
+        var ticket: String
+    )
+
+    data class Format(
+        var format: String
+    )
+}

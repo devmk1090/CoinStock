@@ -1,7 +1,7 @@
 package com.devkproject.coinstock.data
 
 import com.devkproject.coinstock.helper.Socket
-import com.devkproject.coinstock.model.Coin
+import com.devkproject.coinstock.model.UpbitSocket
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.round
 
 @Singleton
 class CoinService @Inject constructor(
@@ -19,18 +18,13 @@ class CoinService @Inject constructor(
 ) {
 
     companion object {
-        const val URL = "ws://"
+        const val URL = "wss://api.upbit.com/websocket/v1"
     }
 
-    fun getCoin(): Flow<List<Coin>> {
+    fun getCoin(): Flow<List<UpbitSocket>> {
         return socket.connect(URL)
             .map {
-                gson.fromJson(it, object : TypeToken<List<Coin>>() {}.type) as List<Coin>
-            }
-            .map {
-                it.map { item ->
-                    item.copy(price = round(item.price * 1000) / 1000)
-                }
+                gson.fromJson(it, object : TypeToken<List<UpbitSocket>>() {}.type) as List<UpbitSocket>
             }
             .flowOn(Dispatchers.IO)
     }
