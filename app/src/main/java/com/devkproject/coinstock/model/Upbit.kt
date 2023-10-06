@@ -1,6 +1,6 @@
 package com.devkproject.coinstock.model
 
-data class UpbitSocket(
+data class Upbit(
     var type: String,
     var codes: List<String>,
 ) {
