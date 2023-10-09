@@ -1,6 +1,6 @@
 package com.devkproject.coinstock.data
 
-import com.devkproject.coinstock.helper.Socket
+import com.devkproject.coinstock.websocket.Socket
 import com.devkproject.coinstock.model.Upbit
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

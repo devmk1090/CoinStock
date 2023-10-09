@@ -1,6 +1,7 @@
-package com.devkproject.coinstock.helper
+package com.devkproject.coinstock.websocket
 
 import android.util.Log
+import com.devkproject.coinstock.model.Upbit
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.callbackFlow
@@ -58,6 +59,12 @@ class Socket @Inject constructor(private val client: OkHttpClient) {
             Log.d(TAG, "Retrying $attempt")
             cause is SocketNetworkException
         }
+
+    fun send(upbit: Upbit) {
+        val ticket = Upbit.Ticket("TEST_5")
+        val format = Upbit.Format("DEFAULT")
+
+    }
 
     class SocketNetworkException(message: String): Exception(message)
 }
