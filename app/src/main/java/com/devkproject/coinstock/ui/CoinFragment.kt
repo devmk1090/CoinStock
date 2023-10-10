@@ -24,7 +24,6 @@ class CoinFragment : Fragment() {
         binding = FragmentCoinBinding.inflate(layoutInflater)
 
         viewModel.coin.observe(viewLifecycleOwner) {
-            Log.d("501501", "it : $it")
         }
         return binding.root
     }

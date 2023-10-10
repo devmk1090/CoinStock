@@ -1,4 +1,4 @@
-package com.devkproject.coinstock.Repository
+package com.devkproject.coinstock.repository
 
 import com.devkproject.coinstock.data.CoinService
 import kotlinx.coroutines.CoroutineScope

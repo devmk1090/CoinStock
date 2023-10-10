@@ -28,6 +28,8 @@ class Socket @Inject constructor(private val client: OkHttpClient) {
         val webSocket = client.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 Log.d(TAG, "Connected: $response")
+                val ticket = Upbit.Ticket("TEST_1234")
+                val type = Upbit("ticker", arrayListOf("KRW-BTC"))
             }
 
             //바이트 메세지 수신
@@ -59,12 +61,6 @@ class Socket @Inject constructor(private val client: OkHttpClient) {
             Log.d(TAG, "Retrying $attempt")
             cause is SocketNetworkException
         }
-
-    fun send(upbit: Upbit) {
-        val ticket = Upbit.Ticket("TEST_5")
-        val format = Upbit.Format("DEFAULT")
-
-    }
 
     class SocketNetworkException(message: String): Exception(message)
 }

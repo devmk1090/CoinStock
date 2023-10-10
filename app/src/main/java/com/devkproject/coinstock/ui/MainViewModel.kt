@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devkproject.coinstock.Repository.SocketRepository
+import com.devkproject.coinstock.repository.SocketRepository
 import com.devkproject.coinstock.model.Upbit
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
