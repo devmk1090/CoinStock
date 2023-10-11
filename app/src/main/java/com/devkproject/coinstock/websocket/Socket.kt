@@ -19,48 +19,50 @@ import javax.inject.Singleton
 class Socket @Inject constructor(private val client: OkHttpClient) {
 
     companion object {
-        private val TAG = Socket::class.java.simpleName
+        private val TAG = "501501"
     }
 
-    fun connect(url: String) = callbackFlow {
+    fun connect(url: String) {
         val request = Request.Builder().url(url).build()
-
         val webSocket = client.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 Log.d(TAG, "Connected: $response")
-                val ticket = Upbit.Ticket("TEST_1234")
-                val type = Upbit("ticker", arrayListOf("KRW-BTC"))
+                val requestJson = """
+                    [
+                      {
+                        "ticket": "test example"
+                      },
+                      {
+                        "type": "ticker",
+                        "codes": [
+                          "KRW-BTC",
+                          "KRW-ETH"
+                        ]
+                      },
+                      {
+                        "format": "DEFAULT"
+                      }
+                    ]
+                """.trimIndent()
+                Log.d(TAG, "json : $requestJson")
+                webSocket.send(requestJson)
             }
 
             //바이트 메세지 수신
             override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-                trySend(bytes.hex())
-                Log.d(TAG, "onMessage: ${bytes.hex()}")
+                Log.d(TAG, "onMessage: $bytes")
             }
+
 
             //WebSocket이 닫힌 경우
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                if (code != 1000) close(SocketNetworkException("Network Failure"))
                 Log.d(TAG, "onClosed: $code")
             }
 
             //연결 실패 or 오류 발생
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                close(SocketNetworkException("onFailure"))
                 Log.d(TAG, "onFailure")
             }
         })
-
-        //Flow가 닫힐 때 WebSocket 연결도 Close
-        awaitClose { webSocket.close(1000, "Closed") }
     }
-        .retryWhen { cause, attempt ->
-            if (attempt > 1) delay(1000 * attempt)
-            else if (attempt >= 8) delay(8000)
-
-            Log.d(TAG, "Retrying $attempt")
-            cause is SocketNetworkException
-        }
-
-    class SocketNetworkException(message: String): Exception(message)
 }
