@@ -10,8 +10,10 @@ import com.devkproject.coinstock.ui.AlarmFragment
 import com.devkproject.coinstock.ui.CoinFragment
 import com.devkproject.coinstock.ui.SettingFragment
 import com.devkproject.coinstock.ui.StockFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.lang.IllegalArgumentException
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
