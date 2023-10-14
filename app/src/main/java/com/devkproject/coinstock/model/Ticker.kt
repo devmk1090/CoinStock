@@ -1,4 +1,4 @@
-package com.devkproject.coinstock.data
+package com.devkproject.coinstock.model
 
 data class Ticker(
     var type: String,

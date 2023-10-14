@@ -1,7 +1,9 @@
 package com.devkproject.coinstock.websocket
 
 import android.util.Log
+import com.devkproject.coinstock.model.Ticker
 import com.devkproject.coinstock.model.Upbit
+import com.google.gson.Gson
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.callbackFlow
@@ -16,7 +18,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Socket @Inject constructor(private val client: OkHttpClient) {
+class Socket @Inject constructor(private val client: OkHttpClient, private val gson: Gson) {
 
     companion object {
         private val TAG = "501501"
@@ -27,30 +29,25 @@ class Socket @Inject constructor(private val client: OkHttpClient) {
         val webSocket = client.newWebSocket(request, object : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 Log.d(TAG, "Connected: $response")
-                val requestJson = """
-                    [
-                      {
-                        "ticket": "test example"
-                      },
-                      {
-                        "type": "ticker",
-                        "codes": [
-                          "KRW-BTC",
-                          "KRW-ETH"
-                        ]
-                      },
-                      {
-                        "format": "DEFAULT"
-                      }
-                    ]
-                """.trimIndent()
-                Log.d(TAG, "json : $requestJson")
-                webSocket.send(requestJson)
+                val type = Upbit("ticker", arrayListOf("KRW-BTC", "KRW-ETH"))
+                val ticket = Upbit.Ticket("test example")
+                val format = Upbit.Format("DEFAULT")
+                val test = gson.toJson(arrayListOf(ticket, type, format))
+
+                webSocket.send(test)
             }
 
             //바이트 메세지 수신
             override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
-                Log.d(TAG, "onMessage: $bytes")
+                Log.d(TAG, "onMessage: ${bytes.utf8()}")
+                try {
+                    val message = gson.fromJson(bytes.utf8(), Ticker::class.java)
+                    Log.d(TAG, "code: ${message.code}")
+                    Log.d(TAG, "high_price: ${message.high_price}")
+                    Log.d(TAG, "low_price: ${message.low_price}")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
             }
 
 
