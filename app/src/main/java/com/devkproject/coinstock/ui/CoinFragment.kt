@@ -1,6 +1,7 @@
 package com.devkproject.coinstock.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +23,13 @@ class CoinFragment : Fragment() {
     ): View {
         binding = FragmentCoinBinding.inflate(layoutInflater)
 
-        viewModel.coin.observe(viewLifecycleOwner) {
-
+        viewModel.run {
+            coin.observe(viewLifecycleOwner) { }
+            responseUpbitTickerList.observe(viewLifecycleOwner) {
+                Log.d("501501", "list : $it")
+            }
         }
+
         return binding.root
     }
 }

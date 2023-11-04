@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface UpbitService {
 
-    @GET("")
+    @GET("v1/market/all")
     suspend fun getTickerList(): List<TickerList>
 }

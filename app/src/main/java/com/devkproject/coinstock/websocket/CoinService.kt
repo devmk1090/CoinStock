@@ -1,6 +1,5 @@
-package com.devkproject.coinstock.data
+package com.devkproject.coinstock.websocket
 
-import com.devkproject.coinstock.websocket.Socket
 import javax.inject.Inject
 import javax.inject.Singleton
 

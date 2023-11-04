@@ -18,6 +18,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    //Websocket
+
     @Singleton
     @Provides
     fun provideOkhttp(): OkHttpClient {
@@ -32,6 +34,9 @@ object NetworkModule {
         return GsonBuilder()
             .create()
     }
+
+
+    //Rest API
 
     @Singleton
     @Provides
